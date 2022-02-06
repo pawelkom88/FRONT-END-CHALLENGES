@@ -5,20 +5,20 @@ export function Data({ database, setDatabase }) {
 
   return (
     <div className="w-full mt-4">
-      <h3 className="font-semibold  text-gray-700 text-lg">Data</h3>
-      <div className="border-dashed border-2 p-4 mt-1">
+      <h3 className="text-lg font-semibold text-gray-700">Data</h3>
+      <div className="p-4 mt-1 border-2 border-dashed">
         <div className="flex flex-col">
           {data.length > 0 ? (
             <div className="-mt-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="pt-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className=" overflow-hidden border-gray-200 sm:rounded-lg">
+              <div className="inline-block min-w-full pt-2 align-middle sm:px-6 lg:px-8">
+                <div className="overflow-hidden border-gray-200  sm:rounded-lg">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="">
                       <tr>
                         {columns.map((header) => (
                           <th
                             key={header}
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                           >
                             {header}
                           </th>
@@ -30,7 +30,7 @@ export function Data({ database, setDatabase }) {
                         <tr key={item.id}>
                           {columns.map((column) => (
                             <td
-                              className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                              className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap"
                               key={`${item.id}-${column}`}
                             >
                               {item[column]}
@@ -61,7 +61,7 @@ export function Data({ database, setDatabase }) {
               </div>
             </div>
           ) : (
-            <p className="text-gray-800 text-sm">There is no data to display</p>
+            <p className="text-sm text-gray-800">There is no data to display</p>
           )}
         </div>
       </div>

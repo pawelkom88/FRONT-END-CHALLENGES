@@ -1,9 +1,9 @@
 export function Tables({ database, setDatabase }) {
   return (
     <div className="w-full">
-      <h3 className="font-semibold text-gray-700 text-lg">Tables</h3>
-      <div className="border-dashed border-2 p-4 mt-1">
-        <ul className="list-disc ml-4 text-gray-800">
+      <h3 className="text-lg font-semibold text-gray-700">Tables</h3>
+      <div className="p-4 mt-1 border-2 border-dashed">
+        <ul className="ml-4 text-gray-800 list-disc">
           {Object.keys(database.tables).map((table, index) => (
             <li key={table} className={index !== 0 ? "mt-1" : ""}>
               <button
