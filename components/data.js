@@ -1,5 +1,6 @@
 export function Data({ database, setDatabase }) {
-  let data = database.tables[database.selected];
+  let table = database.selected;
+  let data = database.tables[table];
   let columns = data[0] ? Object.keys(data[0]) : [];
 
   return (
@@ -8,8 +9,8 @@ export function Data({ database, setDatabase }) {
       <div className="border-dashed border-2 p-4 mt-1">
         <div className="flex flex-col">
           {data.length > 0 ? (
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="-mt-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="pt-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div className=" overflow-hidden border-gray-200 sm:rounded-lg">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="">
@@ -42,9 +43,9 @@ export function Data({ database, setDatabase }) {
                                   ...current,
                                   tables: {
                                     ...current.tables,
-                                    [current.selected]: current.tables[
-                                      current.selected
-                                    ].filter((row) => row.id !== item.id),
+                                    [table]: current.tables[table].filter(
+                                      (row) => row.id !== item.id
+                                    ),
                                   },
                                 }));
                               }}

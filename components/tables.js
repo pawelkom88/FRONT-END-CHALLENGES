@@ -11,7 +11,7 @@ export function Tables({ database, setDatabase }) {
                 onClick={() => {
                   setDatabase((current) => ({
                     ...current,
-                    ...{ selected: table },
+                    selected: table,
                   }));
                 }}
               >

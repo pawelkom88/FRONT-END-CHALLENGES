@@ -1,4 +1,6 @@
 export function Admin({ database, setDatabase }) {
+  let table = database.selected;
+
   return (
     <div className="w-full mt-auto">
       <h3 className="font-semibold  text-gray-700 text-lg">Admin</h3>
@@ -10,14 +12,14 @@ export function Admin({ database, setDatabase }) {
               ...current,
               tables: {
                 ...current.tables,
-                [current.selected]:
-                  current.selected === "users"
+                [table]:
+                  table === "users"
                     ? [
                         { id: 1, name: "Bob", age: 24 },
                         { id: 2, name: "Alice", age: 28 },
                         { id: 3, name: "Jane", age: 30 },
                       ]
-                    : current.selected === "books"
+                    : table === "books"
                     ? [
                         { id: 1, title: "The Lord of the Rings" },
                         { id: 2, title: "Liars Poker" },
