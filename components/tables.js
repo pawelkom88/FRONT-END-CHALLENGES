@@ -1,4 +1,4 @@
-export function Tables({ database, setDatabase }) {
+export function Tables({ database, dispatch }) {
   return (
     <div className="w-full">
       <h3 className="text-lg font-semibold text-gray-700">Tables</h3>
@@ -9,10 +9,11 @@ export function Tables({ database, setDatabase }) {
               <button
                 className={table === database.selected ? "font-semibold" : ""}
                 onClick={() => {
-                  setDatabase((current) => ({
-                    ...current,
-                    selected: table,
-                  }));
+                  dispatch({ type: "selectTable", table });
+                  // setDatabase((current) => ({
+                  //   ...current,
+                  //   selected: table,
+                  // }));
                 }}
               >
                 {table} ({database.tables[table].length})
