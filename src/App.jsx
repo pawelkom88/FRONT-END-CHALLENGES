@@ -4,31 +4,25 @@ import useDebounce from "./hooks/useDebounce";
 import AddedWord from "./components/added-word/AddedWord";
 import ListItem from "./components/list-item/ListItem";
 import Input from "./components/input/Input";
+import ErrorMsg from "./components/error/errorMsg";
+import QueryStatus from "./components/status/QueryStatus";
 import "./App.css";
-
-// const api = 'https://restcountries.com/v3.1/all?fields=name"';
 
 export default function App() {
   const [query, setQuery] = React.useState("");
   const [choosenQuery, setChoosenQuery] = React.useState([]);
+  const [status, setStatus] = React.useState(false);
   const debounceQuery = useDebounce(query, 500);
   const { data, loading, error } = useFetch(debounceQuery);
 
   function handleQuery(item) {
-    // if array is empty add first item
-    if (!choosenQuery.length) {
-      setChoosenQuery([...choosenQuery, item]);
-    }
+    setStatus(false);
 
     // loop over items in array and check for duplicate keys
-    choosenQuery.forEach(query => {
-      if (query.name === item.name) {
-        return;
-      }
+    const filteredQuery = choosenQuery.filter(query => query.name !== item.name);
 
-      // update array with new item
-      setChoosenQuery([...choosenQuery, item]);
-    });
+    // update array with new item
+    setChoosenQuery([...filteredQuery, item]);
 
     // Clear input field
     setQuery("");
@@ -47,28 +41,36 @@ export default function App() {
     }
   }
 
-  const notFound = (query && loading) || data.includes(query) || <p className="p-2">not found</p>;
+  let isQueryIncluded;
+
+  data.forEach(fruit => {
+    if (fruit.includes(query)) {
+      isQueryIncluded = true;
+    } else {
+      isQueryIncluded = false;
+    }
+  });
+
+  const notFound = (query && loading) || (!isQueryIncluded && <p className="p-2">not found</p>);
 
   const loader = loading && query && <p className="p-2">...loading</p>;
 
   return (
-    <div className="mb-6">
+    <div className="relative mb-6">
       <Input onQuery={setQuery} query={query} />
-
+      <QueryStatus onStatusChange={status} />
       {debounceQuery && (
-        <ul className="flex flex-col py-2 mt-2 bg-gray-500 text-white font-bold rounded-lg shadow shadow-gray-400 ">
+        <ul className="absolute top-20 left-0 right-0 min-h-[5rem] flex flex-col py-2 mt-2 bg-white text-gray-900 font-bold rounded-lg shadow shadow-gray-400 ">
           {loader}
           {notFound}
           {data?.map(item => {
-            return <ListItem item={item} onKeyDown={handleKeyDown} onQuery={handleQuery} />;
+            return (
+              <ListItem key={item} item={item} onKeyDown={handleKeyDown} onQuery={handleQuery} />
+            );
           })}
         </ul>
       )}
-
-      {/* <p className="mt-2 text-sm text-green-600 dark:text-green-500">
-        <span className="font-medium">Well done!</span> Some success message.
-      </p> */}
-
+      <ErrorMsg error={error} />
       <AddedWord choosenQuery={choosenQuery} />
     </div>
   );
