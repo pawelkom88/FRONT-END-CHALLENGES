@@ -1,70 +1,42 @@
 import React from "react";
+import EditForm from "./EditForm";
 
-export default function Player({
-  onPlayerRemove,
-  id,
-  name,
-  lastName,
-  age,
-  onPlayerEdit,
-  getPlayerId,
-  showEditInput,
-}) {
-  const [editPlayer, setEditPlayer] = React.useState("");
-  function onEditPlayer(id) {
-    const editedPlayer = {
-      id,
-      name: editPlayer,
-      lastName,
-      age,
-    };
+const btnStyles =
+  "text-sm bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white border border-red-500 hover:border-transparent rounded mt-2 mx-2 p-2";
 
-    onPlayerEdit(editedPlayer, id);
+export default function Player({ onPlayerRemove, player, onPlayerEdit, getPlayerId }) {
+  const [selected, setSelectedPlayer] = React.useState(null);
+
+  function getPlayerId(id, e) {
+    e.stopPropagation();
+    setSelectedPlayer(id);
   }
 
   return (
-    <div className="flex flex-col items-start justify-start my-4">
-      {/* componetn */}
-
-      <li onClick={e => getPlayerId(id, e)} className="cursor-pointer hover:bg-blue-100">
+    <div className="flex flex-col items-start justify-start my-4 mx-2">
+      <li
+        onClick={e => getPlayerId(player.id, e)}
+        className="w-full border-2 border-blue-200 cursor-pointer hover:bg-blue-50 p-4 shadow-md">
         <p className="italic">
           name:
           <span className="font-bold">
-            {name} {lastName}
+            {player.name} {player.lastName}
           </span>
         </p>
         <p className="italic">
           age:
-          <span className="font-bold">{age}</span>
+          <span className="font-bold">{player.age}</span>
         </p>
+        <button className={btnStyles} onClick={() => onPlayerRemove(player.id)}>
+          Remove
+        </button>
+        <EditForm
+          showEditInput={player.id === selected}
+          onPlayerEdit={onPlayerEdit}
+          player={player}
+          setSelectedPlayer={setSelectedPlayer}
+        />
       </li>
-
-      {/* componetn */}
-
-      {showEditInput && (
-        <div className="flex my-2">
-          <label htmlFor="edit player">Edit player name</label>
-          <input
-            className="border border-blue-600 shadow-sm placeholder:text-sm"
-            id="edit"
-            name="edit player"
-            type="text"
-            onChange={e => setEditPlayer(e.target.value)}
-            value={editPlayer}
-          />
-          <button
-            onClick={() => onEditPlayer(id)}
-            className="text-sm bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white border border-green-500 hover:border-transparent rounded mx-2 p-2">
-            Confirm
-          </button>
-        </div>
-      )}
-
-      <button
-        className="text-sm bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white border border-red-500 hover:border-transparent rounded mx-2 p-2"
-        onClick={() => onPlayerRemove(id)}>
-        Remove
-      </button>
     </div>
   );
 }

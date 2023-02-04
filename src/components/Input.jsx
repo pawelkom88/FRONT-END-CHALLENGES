@@ -1,34 +1,14 @@
-export default function Input({
-  id,
-  name,
-  htmlFor,
-  children,
-  type,
-  player,
-  numOfPlayers,
-  onAddPlayer,
-}) {
-  function handlePlayerDetails(e) {
-    const property = e.target.name;
-    const value = e.target.value;
-
-    onAddPlayer({
-      id: numOfPlayers + 1,
-      ...player,
-      [property]: value,
-    });
-  }
-
+export default function Input({ id, name, htmlFor, children, type = "text", value, onChange }) {
   return (
-    <div>
+    <div className="w-full">
       <label htmlFor={htmlFor}>{children}</label>
       <input
-        className="border-2 border-blue-600 shadow-sm placeholder:text-sm p-2"
-        onChange={handlePlayerDetails}
+        className="w-full border-2 border-blue-600 shadow-sm placeholder:text-sm"
+        onChange={onChange}
         name={name}
         id={id}
         type={type}
-        value={player[name]}
+        value={value[name]}
         placeholder={name}
         required
       />
