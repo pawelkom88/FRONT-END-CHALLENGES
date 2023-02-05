@@ -1,3 +1,4 @@
-const ACTION = {
-    
+export const ACTION = {
+    table: 'selectTable',
+    delete: 'deleteRow',
 }

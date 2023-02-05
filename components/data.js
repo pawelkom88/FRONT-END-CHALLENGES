@@ -1,4 +1,4 @@
-export function Data({ database, setDatabase }) {
+export function Data({ database, dispatch }) {
   let table = database.selected;
   let data = database.tables[table];
   let columns = data[0] ? Object.keys(data[0]) : [];
@@ -39,16 +39,23 @@ export function Data({ database, setDatabase }) {
                           <td className="relative px-6 py-3">
                             <button
                               onClick={() => {
-                                setDatabase((current) => ({
-                                  ...current,
-                                  tables: {
-                                    ...current.tables,
-                                    [table]: current.tables[table].filter(
-                                      (row) => row.id !== item.id
-                                    ),
-                                  },
-                                }));
+                                dispatch({
+                                  action: "deleteRow",
+                                  payload: table,
+                                  id: item.id,
+                                });
                               }}
+                              // onClick={() => {
+                              //   setDatabase((current) => ({
+                              //     ...current,
+                              //     tables: {
+                              //       ...current.tables,
+                              //       [table]: current.tables[table].filter(
+                              //         (row) => row.id !== item.id
+                              //       ),
+                              //     },
+                              //   }));
+                              // }}
                             >
                               ❌
                             </button>
