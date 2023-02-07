@@ -1,3 +1,5 @@
+import { ACTION } from "../store/actions";
+
 export function Tables({ database, dispatch }) {
   return (
     <div className="w-full">
@@ -9,15 +11,9 @@ export function Tables({ database, dispatch }) {
               <li key={table} className={index !== 0 ? "mt-1" : ""}>
                 <button
                   className={table === database.selected ? "font-semibold" : ""}
-                  onClick={() => {
-                    dispatch({ action: "selectTable", payload: table });
-                  }}
-                  // onClick={() => {
-                  //   setDatabase((current) => ({
-                  //     ...current,
-                  //     selected: table,
-                  //   }));
-                  // }}
+                  onClick={() =>
+                    dispatch({ type: ACTION.select, payload: table })
+                  }
                 >
                   {table} ({database.tables[table].length})
                 </button>

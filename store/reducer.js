@@ -2,21 +2,22 @@ import { ACTION } from "./actions";
 
 export function reducer(state, action) {
   switch (action.type) {
-    case ACTION.table:
+    case ACTION.select:
       return {
         ...state,
         selected: action.payload,
       };
-    case ACTION.delete: {
-      return {
-        ...state,
-        // selected: payload.table,
-      };
-    }
-    case "bla": {
-      //update state
-    }
+      break;
+    // case ACTION.delete: {
+    //   return {
+    //     ...state,
+    //     // selected: payload.table,
+    //   };
+    // }
+    // case "bla": {
+    //   //update state
+    // }
     default:
-      return state;
+      throw new Error(`Unknown action: ${action.type}`);
   }
 }
