@@ -1,3 +1,5 @@
+import { ACTION } from "../store/actions";
+
 export function Data({ database, dispatch }) {
   let table = database.selected;
   let data = database.tables[table];
@@ -40,7 +42,7 @@ export function Data({ database, dispatch }) {
                             <button
                               onClick={() => {
                                 dispatch({
-                                  action: "deleteRow",
+                                  type: ACTION.delete,
                                   payload: table,
                                   id: item.id,
                                 });
